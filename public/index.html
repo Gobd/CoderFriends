@@ -9,7 +9,7 @@
         <button type="button" name="button" ng-click="getAuth()">Login with Github</button>
         <button type="button" name="button" ng-click="getFollowing()">Get Followers</button>
 
-        <div ng-repeat="follower in following">
+        <div class="half" ng-repeat="follower in following">
             <div>
                 <span ng-click="getActivity(follower.login)">{{follower.login}}</span>
                 <a ng-href="{{follower.html_url}}"><img ng-src="{{follower.avatar_url}}" alt="{{follower.login}}'s profile picture"/></a>

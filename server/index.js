@@ -55,16 +55,24 @@ app.get('/auth/github/callback',
         res.redirect('/');
     });
 
+var errorHandler = function(error) {
+    console.log('error')
+}
+
 app.get('/api/github/following', ensureAuthenticated, function(req, res) {
-        axios.get(req.user.followers_url).then(function(followers) {
+    axios.get(`${req.user.followers_url}?client_id=${config.clientId}&client_secret=${config.clientSecret}`)
+        .then(function(followers) {
             return res.status(200).json(followers.data);
         })
+        .catch(errorHandler)
 })
 
 app.get('/api/github/:username/activity', ensureAuthenticated, function(req, res) {
-        axios.get(`https://api.github.com/users/${req.params.username}/events`).then(function(events) {
+    axios.get(`https://api.github.com/users/${req.params.username}/events?client_id=${config.clientId}&client_secret=${config.clientSecret}`)
+        .then(function(events) {
             return res.status(200).json(events.data);
         })
+        .catch(errorHandler)
 })
 
 function ensureAuthenticated(req, res, next) {
